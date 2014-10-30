@@ -70,6 +70,14 @@ extern NSString *const ASIS3StorageClassReducedRedundancy;
 // Creates a HEAD request for the object at path
 + (id)HEADRequestWithBucket:(NSString *)bucket key:(NSString *)key;
 
++ (id)requestForAclWithBucket:(NSString *)bucket key:(NSString *)key;
+
++ (id)PUTRequestWithBucket:(NSString *)bucket key:(NSString *)key acl:(NSDictionary *)acl;
+
++ (id)requestForMetaWithBucket:(NSString *)bucket key:(NSString *)key;
+
++ (id)PUTRequestWithBucket:(NSString *)bucket key:(NSString *)key meta:(NSDictionary *)meta;
+
 @property (retain, nonatomic) NSString *bucket;
 @property (retain, nonatomic) NSString *key;
 @property (retain, nonatomic) NSString *sourceBucket;

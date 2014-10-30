@@ -31,3 +31,4 @@
 #import <ASIKit/ASIS3ObjectRequest.h>
 #import <ASIKit/ASIS3ServiceRequest.h>
 #import <ASIKit/ASIS3Request.h>
+#import <ASIKit/ASIS3Acl.h>

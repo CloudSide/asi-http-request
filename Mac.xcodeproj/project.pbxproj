@@ -65,6 +65,8 @@
 		3FC070A919209E88004C6C27 /* ASIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FC0705019209C78004C6C27 /* ASIKit.framework */; };
 		3FC070AA19209E8E004C6C27 /* ASIKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3FC0705019209C78004C6C27 /* ASIKit.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		ADA0A89F19F4FBE7004248DC /* ASIS3Acl.h in Headers */ = {isa = PBXBuildFile; fileRef = ADA0A89D19F4FBE7004248DC /* ASIS3Acl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ADA0A8A219F4FBE7004248DC /* ASIS3Acl.m in Sources */ = {isa = PBXBuildFile; fileRef = ADA0A89E19F4FBE7004248DC /* ASIS3Acl.m */; };
 		B50C17DB121C254D0055FCAB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B50C17DA121C254D0055FCAB /* Security.framework */; };
 		B522D720103074AC009A2D22 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = B522D71E103074AC009A2D22 /* ASIInputStream.m */; };
 		B522DE601031BB03009A2D22 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B53FADE70FF38B2A002E2DE6 /* SystemConfiguration.framework */; };
@@ -118,6 +120,8 @@
 		3FC0705819209C78004C6C27 /* ASIKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ASIKit-Prefix.pch"; sourceTree = "<group>"; };
 		3FC0705919209C78004C6C27 /* ASIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ASIKit.h; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADA0A89D19F4FBE7004248DC /* ASIS3Acl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASIS3Acl.h; path = S3/ASIS3Acl.h; sourceTree = "<group>"; };
+		ADA0A89E19F4FBE7004248DC /* ASIS3Acl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASIS3Acl.m; path = S3/ASIS3Acl.m; sourceTree = "<group>"; };
 		B50244191025D36B002B13E1 /* ProxyTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProxyTests.h; sourceTree = "<group>"; };
 		B502441A1025D36B002B13E1 /* ProxyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProxyTests.m; sourceTree = "<group>"; };
 		B50C17DA121C254D0055FCAB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -357,6 +361,8 @@
 				B5403FE71151149E00D8BE63 /* ASIS3Bucket.m */,
 				B5873F8610FF2884001E145F /* ASIS3BucketObject.h */,
 				B5873F8710FF2884001E145F /* ASIS3BucketObject.m */,
+				ADA0A89D19F4FBE7004248DC /* ASIS3Acl.h */,
+				ADA0A89E19F4FBE7004248DC /* ASIS3Acl.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -524,6 +530,7 @@
 				3FC070A119209D7F004C6C27 /* ASIS3ObjectRequest.h in Headers */,
 				3FC070A219209D7F004C6C27 /* ASIS3ServiceRequest.h in Headers */,
 				3FC070A319209D7F004C6C27 /* ASIS3Request.h in Headers */,
+				ADA0A89F19F4FBE7004248DC /* ASIS3Acl.h in Headers */,
 				3FC070A419209D7F004C6C27 /* ASIKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -692,6 +699,7 @@
 				3FC0708419209D3F004C6C27 /* ASIS3Bucket.m in Sources */,
 				3FC0707619209D3F004C6C27 /* ASIFormDataRequest.m in Sources */,
 				3FC0707B19209D3F004C6C27 /* ASIDataDecompressor.m in Sources */,
+				ADA0A8A219F4FBE7004248DC /* ASIS3Acl.m in Sources */,
 				3FC0707E19209D3F004C6C27 /* ASICloudFilesContainer.m in Sources */,
 				3FC0707819209D3F004C6C27 /* ASINetworkQueue.m in Sources */,
 				3FC0708119209D3F004C6C27 /* ASICloudFilesObject.m in Sources */,
@@ -998,6 +1006,7 @@
 				3FC0707119209C78004C6C27 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B55B5EE40F7658C80064029C /* Build configuration list for PBXNativeTarget "Unit Tests (GHUnit)" */ = {
 			isa = XCConfigurationList;
