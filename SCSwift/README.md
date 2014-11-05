@@ -111,6 +111,51 @@ SCS.sharedInstance.deleteBucket(
 )
 ```
 
+#####获取bucket的acl信息
+```Swift
+SCS.sharedInstance.getBucketAcl(
+    bucket: "BucketName",
+    finished: { request in
+        let list = NSString(format:"%@", request.responseDictionary()) as String
+        println(list)
+    },
+    failed: { request in
+        let error = NSString(format:"%@", request.error) as String
+        println(error)
+    }
+)
+```
+
+#####设置bucket的acl信息
+```Swift
+SCS.sharedInstance.setBucketAcl(
+    param:["bucket":"BucketName",
+           "acl":["UserID/Group":["Grant"]]],
+    failed: { request in
+        let error = NSString(format:"%@", request.error) as String
+        println(error)
+    }
+)
+
+//"acl":["SINA0000000123456789":["read","write","read_acp","write_acp"],
+//       "GRPS0000000CANONICAL":["read","write"]]
+```
+
+#####获取bucket的meta信息
+```Swift
+SCS.sharedInstance.getBucketMeta(
+    bucket: "test-create",
+    finished: { request in
+        let list = NSString(format:"%@", request.responseDictionary()) as String
+        println(list)
+    },
+    failed: { request in
+        let error = NSString(format:"%@", request.error) as String
+        println(error)
+    }
+)
+```
+
 ####Object操作
 #####列取object
 ```Swift
@@ -207,5 +252,66 @@ SCS.sharedInstance.copyObject(
 		let error = NSString(format:"%@", request.error) as String
 		println(error)
 	}
+)
+```
+
+#####获取object的acl信息
+```Swift
+SCS.sharedInstance.getObjectAcl(
+    param: ["bucket":"BucketName",
+            "key":"FileKey"],
+    finished: { request in
+        let list = NSString(format:"%@", request.responseDictionary()) as String
+        println(list)
+    },
+    failed: { request in
+        let error = NSString(format:"%@", request.error) as String
+        println(error)
+    }
+)
+```
+
+#####设置object的acl信息
+```Swift
+SCS.sharedInstance.setObjectAcl(
+    param:["bucket":"BucketName",
+           "key":"FileKey",
+           "acl":["UserID/Group":["Grant"]]],
+    failed: { request in
+        let error = NSString(format:"%@", request.error) as String
+        println(error)
+    }
+)
+
+//"acl":["SINA0000000123456789":["read","write","read_acp","write_acp"],
+//       "GRPS0000000CANONICAL":["read","write"]]
+```
+
+#####获取object的meta信息
+```Swift
+SCS.sharedInstance.getObjectMeta(
+    param: ["bucket":"BucketName",
+            "key":"FileKey"],
+    finished: { request in
+        let list = NSString(format:"%@", request.responseDictionary()) as String
+        println(list)
+    },
+    failed: { request in
+        let error = NSString(format:"%@", request.error) as String
+        println(error)
+    }
+)
+```
+
+#####设置object的meta信息
+```Swift
+SCS.sharedInstance.setObjectMeta(
+    param:["bucket":"BucketName",
+           "key":"FileKey",
+           "meta":[MetaDictionary]],
+    failed: { request in
+        let error = NSString(format:"%@", request.error) as String
+        println(error)
+    }
 )
 ```

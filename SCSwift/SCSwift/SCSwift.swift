@@ -179,6 +179,95 @@ public class SCS {
         request.startAsynchronous()
     }
     
+    public func getBucketAcl(#bucket:String, started:((SCSBucketRequest)->Void)! = nil,
+        finished:((SCSBucketRequest)->Void)! = nil,
+        failed:((SCSBucketRequest)->Void)! = nil,
+        headerReceived:((SCSBucketRequest)->Void)! = nil,
+        redirected:((SCSBucketRequest)->Void)! = nil)
+    {
+        
+        let request = SCSBucketRequest.requestForAclWithBucket(bucket as NSString) as SCSBucketRequest
+        self.configureRequest(request)
+        
+        if (started != nil) {
+            request.setStartedBlock({started(request)})
+        }
+        if (finished != nil) {
+            request.setCompletionBlock({finished(request)})
+        }
+        if (failed != nil) {
+            request.setFailedBlock({failed(request)})
+        }
+        if (headerReceived != nil) {
+            request.setHeadersReceivedBlock({header in headerReceived(request)})
+        }
+        if (redirected != nil) {
+            request.setRequestRedirectedBlock({redirected(request)})
+        }
+        
+        request.startAsynchronous()
+    }
+    
+    public func setBucketAcl(#param:Dictionary<String, Any!>, started:((SCSBucketRequest)->Void)! = nil,
+        finished:((SCSBucketRequest)->Void)! = nil,
+        failed:((SCSBucketRequest)->Void)! = nil,
+        headerReceived:((SCSBucketRequest)->Void)! = nil,
+        redirected:((SCSBucketRequest)->Void)! = nil)
+    {
+        let aclDict = param["acl"] as Dictionary<String, Array<String>>
+        
+        let request = SCSBucketRequest.PUTRequestWithBucket(param["bucket"] as String, acl:aclDict) as SCSBucketRequest
+        
+        self.configureRequest(request)
+        
+        if (started != nil) {
+            request.setStartedBlock({started(request)})
+        }
+        if (finished != nil) {
+            request.setCompletionBlock({finished(request)})
+        }
+        if (failed != nil) {
+            request.setFailedBlock({failed(request)})
+        }
+        if (headerReceived != nil) {
+            request.setHeadersReceivedBlock({header in headerReceived(request)})
+        }
+        if (redirected != nil) {
+            request.setRequestRedirectedBlock({redirected(request)})
+        }
+        
+        request.startAsynchronous()
+    }
+    
+    public func getBucketMeta(#bucket:String, started:((SCSBucketRequest)->Void)! = nil,
+        finished:((SCSBucketRequest)->Void)! = nil,
+        failed:((SCSBucketRequest)->Void)! = nil,
+        headerReceived:((SCSBucketRequest)->Void)! = nil,
+        redirected:((SCSBucketRequest)->Void)! = nil)
+    {
+        
+        let request = SCSBucketRequest.requestForMetaWithBucket(bucket as NSString) as SCSBucketRequest
+        self.configureRequest(request)
+        
+        if (started != nil) {
+            request.setStartedBlock({started(request)})
+        }
+        if (finished != nil) {
+            request.setCompletionBlock({finished(request)})
+        }
+        if (failed != nil) {
+            request.setFailedBlock({failed(request)})
+        }
+        if (headerReceived != nil) {
+            request.setHeadersReceivedBlock({header in headerReceived(request)})
+        }
+        if (redirected != nil) {
+            request.setRequestRedirectedBlock({redirected(request)})
+        }
+        
+        request.startAsynchronous()
+    }
+    
     //Object
     public func listObjects(#param:Dictionary<String, Any!>, started:((SCSBucketRequest)->Void)! = nil,
         finished:((SCSBucketRequest)->Void)! = nil,
@@ -349,5 +438,122 @@ public class SCS {
         request.startAsynchronous()
     }
     
-    //ACL
+    public func getObjectAcl(#param:Dictionary<String, String>, started:((SCSObjectRquest)->Void)! = nil,
+        finished:((SCSObjectRquest)->Void)! = nil,
+        failed:((SCSObjectRquest)->Void)! = nil,
+        headerReceived:((SCSObjectRquest)->Void)! = nil,
+        redirected:((SCSObjectRquest)->Void)! = nil)
+    {
+        
+        let request = SCSObjectRquest.requestForAclWithBucket(param["bucket"], key: param["key"])as SCSObjectRquest
+        self.configureRequest(request)
+        
+        if (started != nil) {
+            request.setStartedBlock({started(request)})
+        }
+        if (finished != nil) {
+            request.setCompletionBlock({finished(request)})
+        }
+        if (failed != nil) {
+            request.setFailedBlock({failed(request)})
+        }
+        if (headerReceived != nil) {
+            request.setHeadersReceivedBlock({header in headerReceived(request)})
+        }
+        if (redirected != nil) {
+            request.setRequestRedirectedBlock({redirected(request)})
+        }
+        
+        request.startAsynchronous()
+    }
+    
+    public func setObjectAcl(#param:Dictionary<String, Any!>, started:((SCSObjectRquest)->Void)! = nil,
+        finished:((SCSObjectRquest)->Void)! = nil,
+        failed:((SCSObjectRquest)->Void)! = nil,
+        headerReceived:((SCSObjectRquest)->Void)! = nil,
+        redirected:((SCSObjectRquest)->Void)! = nil)
+    {
+        
+        let aclDict = param["acl"] as Dictionary<String, Array<String>>
+        
+        let request = SCSObjectRquest.PUTRequestWithBucket(param["bucket"] as String, key: param["key"] as String, acl:aclDict) as SCSObjectRquest
+        self.configureRequest(request)
+        
+        if (started != nil) {
+            request.setStartedBlock({started(request)})
+        }
+        if (finished != nil) {
+            request.setCompletionBlock({finished(request)})
+        }
+        if (failed != nil) {
+            request.setFailedBlock({failed(request)})
+        }
+        if (headerReceived != nil) {
+            request.setHeadersReceivedBlock({header in headerReceived(request)})
+        }
+        if (redirected != nil) {
+            request.setRequestRedirectedBlock({redirected(request)})
+        }
+        
+        request.startAsynchronous()
+    }
+    
+    public func getObjectMeta(#param:Dictionary<String, String>, started:((SCSObjectRquest)->Void)! = nil,
+        finished:((SCSObjectRquest)->Void)! = nil,
+        failed:((SCSObjectRquest)->Void)! = nil,
+        headerReceived:((SCSObjectRquest)->Void)! = nil,
+        redirected:((SCSObjectRquest)->Void)! = nil)
+    {
+        
+        let request = SCSObjectRquest.requestForMetaWithBucket(param["bucket"], key: param["key"])as SCSObjectRquest
+        self.configureRequest(request)
+        
+        if (started != nil) {
+            request.setStartedBlock({started(request)})
+        }
+        if (finished != nil) {
+            request.setCompletionBlock({finished(request)})
+        }
+        if (failed != nil) {
+            request.setFailedBlock({failed(request)})
+        }
+        if (headerReceived != nil) {
+            request.setHeadersReceivedBlock({header in headerReceived(request)})
+        }
+        if (redirected != nil) {
+            request.setRequestRedirectedBlock({redirected(request)})
+        }
+        
+        request.startAsynchronous()
+    }
+    
+    public func setObjectMeta(#param:Dictionary<String, Any!>, started:((SCSObjectRquest)->Void)! = nil,
+        finished:((SCSObjectRquest)->Void)! = nil,
+        failed:((SCSObjectRquest)->Void)! = nil,
+        headerReceived:((SCSObjectRquest)->Void)! = nil,
+        redirected:((SCSObjectRquest)->Void)! = nil)
+    {
+        let metaDict = param["meta"] as Dictionary<String, String>
+        
+        let request = SCSObjectRquest.PUTRequestWithBucket(param["bucket"] as String, key: param["key"] as String, meta:metaDict) as SCSObjectRquest
+        self.configureRequest(request)
+        
+        if (started != nil) {
+            request.setStartedBlock({started(request)})
+        }
+        if (finished != nil) {
+            request.setCompletionBlock({finished(request)})
+        }
+        if (failed != nil) {
+            request.setFailedBlock({failed(request)})
+        }
+        if (headerReceived != nil) {
+            request.setHeadersReceivedBlock({header in headerReceived(request)})
+        }
+        if (redirected != nil) {
+            request.setRequestRedirectedBlock({redirected(request)})
+        }
+        
+        request.startAsynchronous()
+    }
 }
