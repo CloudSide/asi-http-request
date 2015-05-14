@@ -55,10 +55,14 @@ typedef enum _ASIS3UrlStyle {
 
 	// The access policy to use when PUTting a file (see the string constants at the top ASIS3Request.h for details on what the possible options are)
 	NSString *accessPolicy;
+    
+    NSDictionary *userMeta;
 
 	// Internally used while parsing errors
 	NSString *currentXMLElementContent;
 	NSMutableArray *currentXMLElementStack;
+    
+    NSDictionary *responseDictionary;
 }
 
 // Uses the supplied date to create a Date header string
@@ -113,6 +117,8 @@ typedef enum _ASIS3UrlStyle {
                              urlStyle:(ASIS3UrlStyle)urlStyle
                           subResource:(NSString *)subResource;
 
+- (NSDictionary *)responseDictionary;
+
 @property (retain) NSString *dateString;
 @property (retain) NSString *accessKey;
 @property (retain) NSString *secretAccessKey;
@@ -120,4 +126,6 @@ typedef enum _ASIS3UrlStyle {
 @property (retain) NSString *currentXMLElementContent;
 @property (retain) NSMutableArray *currentXMLElementStack;
 @property (retain) NSString *requestScheme;
+@property (retain) NSDictionary *userMeta;
+
 @end

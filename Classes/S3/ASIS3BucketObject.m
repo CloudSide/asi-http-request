@@ -46,6 +46,22 @@
 	return request;
 }
 
+- (ASIS3ObjectRequest *)requestForAcl {
+    return [ASIS3ObjectRequest requestForAclWithBucket:[self bucket] key:[self key]];
+}
+
+- (ASIS3ObjectRequest *)PUTRequestWithAcl:(NSDictionary *)acl {
+    return [ASIS3ObjectRequest PUTRequestWithBucket:[self bucket] key:[self key] acl:acl];
+}
+
+- (ASIS3ObjectRequest *)requestForMeta {
+    return [ASIS3ObjectRequest requestForMetaWithBucket:[self bucket] key:[self key]];
+}
+
+- (ASIS3ObjectRequest *)PUTRequestWithMeta:(NSDictionary *)meta {
+    return [ASIS3ObjectRequest PUTRequestWithBucket:[self bucket] key:[self key] meta:meta];
+}
+
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"Key: %@ lastModified: %@ ETag: %@ size: %llu ownerID: %@ ownerName: %@",[self key],[self lastModified],[self ETag],[self size],[self ownerID],[self ownerName]];

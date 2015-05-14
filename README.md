@@ -48,16 +48,16 @@ ASI-SCS
 
 # If not present, download ASIKit archive, extract it and cleanup.
 if [ ! -e $SRCROOT/ASIKit.framework ]; then
-	rm -rf $SRCROOT/ASIKit
-	mkdir $SRCROOT/ASIKit
-	cd $SRCROOT/ASIKit
-	echo "Downloading ASIKit framework"
-	curl -s -O http://sdk.sinastorage.cn/ASIKit.framework.zip
-	echo "Unzipping ASIKit"
-	unzip ASIKit.framework.zip
-	mv ASIKit.framework $SRCROOT
-	rm -rf $SRCROOT/ASIKit
-	echo "ASIKit installed for build"
+  rm -rf $SRCROOT/ASIKit
+  mkdir $SRCROOT/ASIKit
+  cd $SRCROOT/ASIKit
+  echo "Downloading ASIKit framework"
+  curl -s -O http://sdk.sinastorage.cn/ASIKit.framework.zip
+  echo "Unzipping ASIKit"
+  unzip ASIKit.framework.zip
+  mv ASIKit.framework $SRCROOT
+  rm -rf $SRCROOT/ASIKit
+  echo "ASIKit installed for build"
 fi
 ```
 
@@ -125,6 +125,37 @@ if ([request error]) {
 }
 ```
 
+#####获取bucket的acl信息
+```objective-c
+ASIS3BucketRequest *request = [ASIS3BucketRequest requestForAclWithBucket:@"my-bucket"];
+[request startSynchronous];
+
+if ([request error]) {
+   NSLog(@"%@",[[request error] localizedDescription]);
+}
+```
+
+#####设置bucket的acl
+```objective-c
+ASIS3BucketRequest *request = [ASIS3BucketRequest PUTRequestWithBucket:@"my-bucket" acl:YourACLDictionary];
+
+[request startSynchronous];
+
+if ([request error]) {
+   NSLog(@"%@",[[request error] localizedDescription]);
+}
+```
+
+#####获取bucket的meta信息
+```objective-c
+ASIS3BucketRequest *request = [ASIS3BucketRequest requestForMetaWithBucket:@"my-bucket"];
+[request startSynchronous];
+
+if ([request error]) {
+   NSLog(@"%@",[[request error] localizedDescription]);
+}
+```
+
 ####Object操作
 #####列取object
 ```objective-c
@@ -151,9 +182,9 @@ ASIS3ObjectRequest *request = [ASIS3ObjectRequest requestWithBucket:bucket key:p
 [request startSynchronous];
 
 if (![request error]) {
-	NSData *data = [request responseData];
+  NSData *data = [request responseData];
 } else {
-	NSLog(@"%@",[[request error] localizedDescription]);
+  NSLog(@"%@",[[request error] localizedDescription]);
 }
 ```
 
@@ -194,6 +225,46 @@ if ([request error]) {
 ASIS3ObjectRequest *request = [object GETRequest];
 NSString *downloadPath = @"path/to/save/yourFile";
 [request setDownloadDestinationPath:downloadPath];
+[request startSynchronous];
+
+if ([request error]) {
+   NSLog(@"%@",[[request error] localizedDescription]);
+}
+```
+
+#####获取object的acl信息
+```objective-c
+ASIS3ObjectRequest *request = [ASIS3ObjectRequest requestForAclWithBucket:@"my-bucket" key:@"path/to/the/object"];
+[request startSynchronous];
+
+if ([request error]) {
+   NSLog(@"%@",[[request error] localizedDescription]);
+}
+```
+
+#####设置object的acl
+```objective-c
+ASIS3ObjectRequest *request = [ASIS3ObjectRequest PUTRequestWithBucket:@"my-bucket" key:@"path/to/the/object" acl:YourACLDictionary];
+[request startSynchronous];
+
+if ([request error]) {
+   NSLog(@"%@",[[request error] localizedDescription]);
+}
+```
+
+#####获取object的meta信息
+```objective-c
+ASIS3ObjectRequest *request = [ASIS3ObjectRequest requestForMetaWithBucket:@"my-bucket" key:@"path/to/the/object"];
+[request startSynchronous];
+
+if ([request error]) {
+   NSLog(@"%@",[[request error] localizedDescription]);
+}
+```
+
+#####设置object的meta信息
+```objective-c
+ASIS3ObjectRequest *setMetaRequest = [ASIS3ObjectRequest PUTRequestWithBucket:@"my-bucket" key:@"path/to/the/object" meta:YourMetaInfoDictionary];
 [request startSynchronous];
 
 if ([request error]) {

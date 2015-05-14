@@ -7,7 +7,7 @@
 //
 
 #import "ASIS3Bucket.h"
-
+#import "ASIS3BucketRequest.h"
 
 @implementation ASIS3Bucket
 
@@ -17,6 +17,18 @@
 	[bucket setOwnerID:anOwnerID];
 	[bucket setOwnerName:anOwnerName];
 	return bucket;
+}
+
+- (ASIS3BucketRequest *)requestForAcl {
+    return [ASIS3BucketRequest requestForAclWithBucket:[self name]];
+}
+
+- (ASIS3BucketRequest *)PUTRequestWithAcl:(NSDictionary *)acl {
+    return [ASIS3BucketRequest PUTRequestWithBucket:[self name] acl:acl];
+}
+
+- (ASIS3BucketRequest *)requestForMeta {
+    return [ASIS3BucketRequest requestForMetaWithBucket:[self name]];
 }
 
 - (void)dealloc

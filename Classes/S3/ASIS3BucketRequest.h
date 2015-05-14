@@ -60,6 +60,14 @@
 // Use for deleting buckets - they must be empty for this to succeed
 + (id)DELETERequestWithBucket:(NSString *)bucket;
 
++ (id)requestForAclWithBucket:(NSString *)bucket;
+
++ (id)PUTRequestWithBucket:(NSString *)bucket acl:(NSDictionary *)acl;
+
++ (id)requestForMetaWithBucket:(NSString *)bucket;
+
+//+ (id)PUTRequestWithBucket:(NSString *)bucket meta:(NSDictionary *)meta;
+
 - (id)requestForNextChunk;
 
 @property (retain, nonatomic) NSString *bucket;

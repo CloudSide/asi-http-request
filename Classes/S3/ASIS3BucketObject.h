@@ -44,6 +44,14 @@
 // Returns a request that will delete this object when run
 - (ASIS3ObjectRequest *)DELETERequest;
 
+- (ASIS3ObjectRequest *)requestForAcl;
+
+- (ASIS3ObjectRequest *)PUTRequestWithAcl:(NSDictionary *)acl;
+
+- (ASIS3ObjectRequest *)requestForMeta;
+
+- (ASIS3ObjectRequest *)PUTRequestWithMeta:(NSDictionary *)meta;
+
 @property (retain) NSString *bucket;
 @property (retain) NSString *key;
 @property (retain) NSDate *lastModified;

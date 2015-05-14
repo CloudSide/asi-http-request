@@ -76,7 +76,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 8;
+    return 15;
 }
 
 
@@ -97,15 +97,29 @@
         }else if (indexPath.row == 2) {
             cell.textLabel.text = @"List Buckets";
         }else if (indexPath.row == 3) {
-            cell.textLabel.text = @"List Objects";
+            cell.textLabel.text = @"GET Bucket ACL";
         }else if (indexPath.row == 4) {
-            cell.textLabel.text = @"Upload Object";
+            cell.textLabel.text = @"PUT Bucket ACL";
         }else if (indexPath.row == 5) {
-            cell.textLabel.text = @"Download Object";
+            cell.textLabel.text = @"GET Bucket Meta";
         }else if (indexPath.row == 6) {
-            cell.textLabel.text = @"Copy Object";
+            cell.textLabel.text = @"List Objects";
         }else if (indexPath.row == 7) {
+            cell.textLabel.text = @"Upload Object";
+        }else if (indexPath.row == 8) {
+            cell.textLabel.text = @"Download Object";
+        }else if (indexPath.row == 9) {
+            cell.textLabel.text = @"Copy Object";
+        }else if (indexPath.row == 10) {
             cell.textLabel.text = @"Delete Object";
+        }else if (indexPath.row == 11) {
+            cell.textLabel.text = @"GET Object ACL";
+        }else if (indexPath.row == 12) {
+            cell.textLabel.text = @"PUT Object ACL";
+        }else if (indexPath.row == 13) {
+            cell.textLabel.text = @"GET Object Meta";
+        }else if (indexPath.row == 14) {
+            cell.textLabel.text = @"PUT Object Meta";
         }
     }
     
@@ -138,11 +152,29 @@
         
     }else if (indexPath.row == 3) {
         
+        ASIS3BucketRequest *request = [ASIS3BucketRequest requestForAclWithBucket:kUserTestBucketCreate];
+        [request setUserInfo:[NSDictionary dictionaryWithObject:@"GET Bucket ACL" forKey:@"requestKind"]];
+        [self.globleNetWorkQueue addOperation:request];
+        
+    }else if (indexPath.row == 4) {
+        
+        ASIS3BucketRequest *request = [ASIS3BucketRequest PUTRequestWithBucket:kUserTestBucketCreate acl:@{@"SINA0000000123456789":@[@"read", @"read_acp" , @"write", @"write_acp" ]}];
+        [request setUserInfo:[NSDictionary dictionaryWithObject:@"PUT Bucket ACL" forKey:@"requestKind"]];
+        [self.globleNetWorkQueue addOperation:request];
+        
+    }else if (indexPath.row == 5) {
+        
+        ASIS3BucketRequest *request = [ASIS3BucketRequest requestForMetaWithBucket:kUserTestBucketCreate];
+        [request setUserInfo:[NSDictionary dictionaryWithObject:@"GET Bucket Meta" forKey:@"requestKind"]];
+        [self.globleNetWorkQueue addOperation:request];
+        
+    }else if (indexPath.row == 6) {
+        
         ASIS3BucketRequest *request = [ASIS3BucketRequest requestWithBucket:kUserTestBucketCreate];
         [request setUserInfo:[NSDictionary dictionaryWithObject:@"List Objects" forKey:@"requestKind"]];
         [self.globleNetWorkQueue addOperation:request];
         
-    }else if (indexPath.row == 4) {
+    }else if (indexPath.row == 7) {
         
         NSString *filePath = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"png"];
         ASIS3ObjectRequest *request = [ASIS3ObjectRequest PUTRequestForFile:filePath
@@ -151,7 +183,7 @@
         [request setUserInfo:[NSDictionary dictionaryWithObject:@"Upload Object" forKey:@"requestKind"]];
         [self.globleNetWorkQueue addOperation:request];
         
-    }else if (indexPath.row == 5) {
+    }else if (indexPath.row == 8) {
         
         ASIS3ObjectRequest *request = [ASIS3ObjectRequest requestWithBucket:kUserTestBucketCreate key:@"test.png"];
         
@@ -162,7 +194,7 @@
         [request setUserInfo:[NSDictionary dictionaryWithObject:@"Download Object" forKey:@"requestKind"]];
         [self.globleNetWorkQueue addOperation:request];
         
-    }else if (indexPath.row == 6) {
+    }else if (indexPath.row == 9) {
         
         ASIS3ObjectRequest *request = [ASIS3ObjectRequest COPYRequestFromBucket:kUserTestBucketCreate
                                                                             key:@"test.png"
@@ -171,10 +203,34 @@
         [request setUserInfo:[NSDictionary dictionaryWithObject:@"Copy Object" forKey:@"requestKind"]];
         [self.globleNetWorkQueue addOperation:request];
         
-    }else if (indexPath.row == 7) {
+    }else if (indexPath.row == 10) {
         
         ASIS3ObjectRequest *request = [ASIS3ObjectRequest DELETERequestWithBucket:kUserTestBucketCreate key:@"test.png"];
         [request setUserInfo:[NSDictionary dictionaryWithObject:@"Delete Object" forKey:@"requestKind"]];
+        [self.globleNetWorkQueue addOperation:request];
+        
+    }else if (indexPath.row == 11) {
+        
+        ASIS3ObjectRequest *request = [ASIS3ObjectRequest requestForAclWithBucket:kUserTestBucketCreate key:@"test.png"];
+        [request setUserInfo:[NSDictionary dictionaryWithObject:@"GET Object ACL" forKey:@"requestKind"]];
+        [self.globleNetWorkQueue addOperation:request];
+        
+    }else if (indexPath.row == 12) {
+        
+        ASIS3ObjectRequest *request = [ASIS3ObjectRequest PUTRequestWithBucket:kUserTestBucketCreate key:@"test.png" acl:@{@"SINA0000000123456789":@[@"read", @"read_acp" , @"write", @"write_acp" ]}];
+        [request setUserInfo:[NSDictionary dictionaryWithObject:@"PUT Object ACL" forKey:@"requestKind"]];
+        [self.globleNetWorkQueue addOperation:request];
+        
+    }else if (indexPath.row == 13) {
+        
+        ASIS3ObjectRequest *request = [ASIS3ObjectRequest requestForMetaWithBucket:kUserTestBucketCreate key:@"test.png"];
+        [request setUserInfo:[NSDictionary dictionaryWithObject:@"GET Object Meta" forKey:@"requestKind"]];
+        [self.globleNetWorkQueue addOperation:request];
+        
+    }else if (indexPath.row == 14) {
+        
+        ASIS3ObjectRequest *request = [ASIS3ObjectRequest PUTRequestWithBucket:kUserTestBucketCreate key:@"test.png" meta:@{@"testMetaKey":@"testMetaValue"}];
+        [request setUserInfo:[NSDictionary dictionaryWithObject:@"PUT Object Meta" forKey:@"requestKind"]];
         [self.globleNetWorkQueue addOperation:request];
         
     }
@@ -207,6 +263,23 @@
         
         NSArray *buckets = [(ASIS3ServiceRequest *)request buckets];
         NSLog(@"%@", buckets);
+    }
+    
+    if ([requestKind isEqualToString:@"GET Bucket ACL"]) {
+        
+        [MBProgressHUD showSuccessHUDAddedTo:self.navigationController.view text:@"列取成功" duration:1.5];
+        NSLog(@"%@", [(ASIS3BucketRequest *)request responseDictionary]);
+    }
+    
+    if ([requestKind isEqualToString:@"PUT Bucket ACL"]) {
+        
+        [MBProgressHUD showSuccessHUDAddedTo:self.navigationController.view text:@"设置成功" duration:1.5];
+    }
+    
+    if ([requestKind isEqualToString:@"GET Bucket Meta"]) {
+        
+        [MBProgressHUD showSuccessHUDAddedTo:self.navigationController.view text:@"列取成功" duration:1.5];
+        NSLog(@"%@", [(ASIS3BucketRequest *)request responseDictionary]);
     }
     
     if ([requestKind isEqualToString:@"List Objects"]) {
@@ -242,6 +315,28 @@
         NSLog(@"%@ deleted", [(ASIS3ObjectRequest *)request key]);
     }
     
+    if ([requestKind isEqualToString:@"GET Object ACL"]) {
+        
+        [MBProgressHUD showSuccessHUDAddedTo:self.navigationController.view text:@"列取成功" duration:1.5];
+        NSLog(@"%@", [(ASIS3ObjectRequest *)request responseDictionary]);
+    }
+    
+    if ([requestKind isEqualToString:@"PUT Object ACL"]) {
+        
+        [MBProgressHUD showSuccessHUDAddedTo:self.navigationController.view text:@"设置成功" duration:1.5];
+    }
+    
+    if ([requestKind isEqualToString:@"GET Object Meta"]) {
+        
+        [MBProgressHUD showSuccessHUDAddedTo:self.navigationController.view text:@"列取成功" duration:1.5];
+        NSLog(@"%@", [(ASIS3ObjectRequest *)request responseDictionary]);
+    }
+    
+    if ([requestKind isEqualToString:@"PUT Object Meta"]) {
+        
+        [MBProgressHUD showSuccessHUDAddedTo:self.navigationController.view text:@"设置成功" duration:1.5];
+    }
+    
     NSLog(@"===== <%@>  finished", requestKind);
 }
 
@@ -265,6 +360,24 @@
         
         [MBProgressHUD showErrorHUDAddedTo:self.navigationController.view text:@"列取失败" duration:1.5];
         NSLog(@"%@", [(ASIS3ServiceRequest *)request error]);
+    }
+    
+    if ([requestKind isEqualToString:@"GET Bucket ACL"]) {
+        
+        [MBProgressHUD showSuccessHUDAddedTo:self.navigationController.view text:@"列取失败" duration:1.5];
+        NSLog(@"%@", [(ASIS3BucketRequest *)request error]);
+    }
+    
+    if ([requestKind isEqualToString:@"PUT Bucket ACL"]) {
+        
+        [MBProgressHUD showSuccessHUDAddedTo:self.navigationController.view text:@"设置失败" duration:1.5];
+        NSLog(@"%@", [(ASIS3BucketRequest *)request error]);
+    }
+    
+    if ([requestKind isEqualToString:@"GET Bucket Meta"]) {
+        
+        [MBProgressHUD showSuccessHUDAddedTo:self.navigationController.view text:@"列取失败" duration:1.5];
+        NSLog(@"%@", [(ASIS3BucketRequest *)request error]);
     }
     
     if ([requestKind isEqualToString:@"List Objects"]) {
@@ -294,6 +407,30 @@
     if ([requestKind isEqualToString:@"Delete Object"]) {
         
         [MBProgressHUD showErrorHUDAddedTo:self.navigationController.view text:@"删除失败" duration:1.5];
+        NSLog(@"%@", [(ASIS3ObjectRequest *)request error]);
+    }
+    
+    if ([requestKind isEqualToString:@"GET Object ACL"]) {
+        
+        [MBProgressHUD showSuccessHUDAddedTo:self.navigationController.view text:@"列取失败" duration:1.5];
+        NSLog(@"%@", [(ASIS3ObjectRequest *)request error]);
+    }
+    
+    if ([requestKind isEqualToString:@"PUT Object ACL"]) {
+        
+        [MBProgressHUD showSuccessHUDAddedTo:self.navigationController.view text:@"设置失败" duration:1.5];
+        NSLog(@"%@", [(ASIS3ObjectRequest *)request error]);
+    }
+    
+    if ([requestKind isEqualToString:@"GET Object Meta"]) {
+        
+        [MBProgressHUD showSuccessHUDAddedTo:self.navigationController.view text:@"列取失败" duration:1.5];
+        NSLog(@"%@", [(ASIS3ObjectRequest *)request error]);
+    }
+    
+    if ([requestKind isEqualToString:@"PUT Object Meta"]) {
+        
+        [MBProgressHUD showSuccessHUDAddedTo:self.navigationController.view text:@"设置失败" duration:1.5];
         NSLog(@"%@", [(ASIS3ObjectRequest *)request error]);
     }
     

@@ -48,7 +48,9 @@ static NSString *sharedSecretAccessKey = nil;
 	[accessKey release];
 	[secretAccessKey release];
 	[accessPolicy release];
+    [userMeta release];
 	[requestScheme release];
+    [responseDictionary release];
 	[super dealloc];
 }
 
@@ -72,6 +74,15 @@ static NSString *sharedSecretAccessKey = nil;
 	if ([self accessPolicy]) {
 		[headers setObject:[self accessPolicy] forKey:@"x-amz-acl"];
 	}
+    
+    if ([self userMeta]) {
+        
+        for (NSString *key in [[self userMeta] allKeys]) {
+            NSString *headerKey = [NSString stringWithFormat:@"x-amz-meta-%@", key];
+            [headers setObject:[[self userMeta] objectForKey:key] forKey:headerKey];
+        }
+    }
+    
 	return headers;
 }
 
@@ -218,6 +229,8 @@ static NSString *sharedSecretAccessKey = nil;
         if ([jsonObject objectForKey:@"Message"]) {
             
             [self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIS3ResponseErrorType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[jsonObject objectForKey:@"Message"], NSLocalizedDescriptionKey, nil]]];
+        }else {
+            responseDictionary = [jsonObject retain];
         }
         
     } else {
@@ -281,6 +294,7 @@ static NSString *sharedSecretAccessKey = nil;
 	[newRequest setSecretAccessKey:[self secretAccessKey]];
 	[newRequest setRequestScheme:[self requestScheme]];
 	[newRequest setAccessPolicy:[self accessPolicy]];
+    [newRequest setUserMeta:[self userMeta]];
 	return newRequest;
 }
 
@@ -385,6 +399,10 @@ static NSString *sharedSecretAccessKey = nil;
 {
 }
 
+- (NSDictionary *)responseDictionary {
+    return responseDictionary;
+}
+
 @synthesize dateString;
 @synthesize accessKey;
 @synthesize secretAccessKey;
@@ -392,4 +410,5 @@ static NSString *sharedSecretAccessKey = nil;
 @synthesize currentXMLElementStack;
 @synthesize accessPolicy;
 @synthesize requestScheme;
+@synthesize userMeta;
 @end

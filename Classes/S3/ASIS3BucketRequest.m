@@ -80,6 +80,40 @@
 	return request;
 }
 
++ (id)requestForAclWithBucket:(NSString *)bucket {
+    
+    ASIS3BucketRequest *newRequest = [self requestWithBucket:bucket subResource:@"acl"];
+    [newRequest setRequestMethod:@"GET"];
+    return newRequest;
+}
+
++ (id)PUTRequestWithBucket:(NSString *)bucket acl:(NSDictionary *)acl {
+    
+    ASIS3BucketRequest *newRequest = [self requestForAclWithBucket:bucket];
+    [newRequest setRequestMethod:@"PUT"];
+    
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:acl options:kNilOptions error:&error];
+    
+    [newRequest setPostBody:(NSMutableData *)jsonData];
+    return newRequest;
+}
+
++ (id)requestForMetaWithBucket:(NSString *)bucket {
+    
+    ASIS3BucketRequest *request = [self requestWithBucket:bucket subResource:@"meta"];
+    [request setRequestMethod:@"GET"];
+    return request;
+}
+
+//+ (id)PUTRequestWithBucket:(NSString *)bucket meta:(NSDictionary *)meta {
+//    
+//    ASIS3BucketRequest *request = [self requestWithBucket:bucket subResource:@"meta"];
+//    [request setRequestMethod:@"PUT"];
+//    [request setUserMeta:meta];
+//    return request;
+//}
+
 - (void)dealloc
 {
 	[currentObject release];
@@ -105,6 +139,7 @@
 - (void)buildURL
 {
 	NSString *baseURL;
+    NSString *urlString;
 	if ([self subResource]) {
 		baseURL = [NSString stringWithFormat:@"%@://%@.%@/?%@",[self requestScheme],[self bucket],[[self class] S3Host],[self subResource]];
 	} else {
@@ -128,11 +163,16 @@
 		if ([[self subResource] length] > 0) {
 			template = @"%@&%@";
 		}
-		[self setURL:[NSURL URLWithString:[NSString stringWithFormat:template,baseURL,[queryParts componentsJoinedByString:@"&"]]]];
+        urlString = [NSString stringWithFormat:template,baseURL,[queryParts componentsJoinedByString:@"&"]];
 	} else {
-		[self setURL:[NSURL URLWithString:baseURL]];
-
+        urlString = baseURL;
 	}
+    
+    if ([[self subResource] isEqualToString:@"acl"] || [[self subResource] isEqualToString:@"meta"]) {
+        urlString = [urlString stringByAppendingString:@"&formatter=json"];
+    }
+    
+    [self setURL:[NSURL URLWithString:urlString]];
 }
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict

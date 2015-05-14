@@ -79,6 +79,40 @@ NSString *const ASIS3StorageClassReducedRedundancy = @"REDUCED_REDUNDANCY";
 	return newRequest;
 }
 
++ (id)requestForAclWithBucket:(NSString *)bucket key:(NSString *)key {
+    
+    ASIS3ObjectRequest *newRequest = [self requestWithBucket:bucket key:key subResource:@"acl"];
+    [newRequest setRequestMethod:@"GET"];
+    return newRequest;
+}
+
++ (id)PUTRequestWithBucket:(NSString *)bucket key:(NSString *)key acl:(NSDictionary *)acl {
+    
+    ASIS3ObjectRequest *newRequest = [self requestForAclWithBucket:bucket key:key];
+    [newRequest setRequestMethod:@"PUT"];
+    
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:acl options:kNilOptions error:&error];
+    
+    [newRequest setPostBody:(NSMutableData *)jsonData];
+    return newRequest;
+}
+
++ (id)requestForMetaWithBucket:(NSString *)bucket key:(NSString *)key {
+    
+    ASIS3ObjectRequest *request = [self requestWithBucket:bucket key:key subResource:@"meta"];
+    [request setRequestMethod:@"GET"];
+    return request;
+}
+
++ (id)PUTRequestWithBucket:(NSString *)bucket key:(NSString *)key meta:(NSDictionary *)meta {
+    
+    ASIS3ObjectRequest *request = [self requestWithBucket:bucket key:key subResource:@"meta"];
+    [request setRequestMethod:@"PUT"];
+    [request setUserMeta:meta];
+    return request;
+}
+
 - (id)copyWithZone:(NSZone *)zone
 {
 	ASIS3ObjectRequest *newRequest = [super copyWithZone:zone];
@@ -106,11 +140,20 @@ NSString *const ASIS3StorageClassReducedRedundancy = @"REDUCED_REDUNDANCY";
 
 - (void)buildURL
 {
+    NSString *urlString = nil;
+    
 	if ([self subResource]) {
-		[self setURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@://%@.%@%@?%@",[self requestScheme],[self bucket],[[self class] S3Host],[ASIS3Request stringByURLEncodingForS3Path:[self key]],[self subResource]]]];
+        urlString = [NSString stringWithFormat:@"%@://%@.%@%@?%@",[self requestScheme],[self bucket],[[self class] S3Host],[ASIS3Request stringByURLEncodingForS3Path:[self key]],[self subResource]];
 	} else {
-		[self setURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@://%@.%@%@",[self requestScheme],[self bucket],[[self class] S3Host],[ASIS3Request stringByURLEncodingForS3Path:[self key]]]]];
+        urlString = [NSString stringWithFormat:@"%@://%@.%@%@",[self requestScheme],[self bucket],[[self class] S3Host],[ASIS3Request stringByURLEncodingForS3Path:[self key]]];
+		
 	}
+    
+    if ([[self subResource] isEqualToString:@"acl"] || [[self subResource] isEqualToString:@"meta"]) {
+        urlString = [urlString stringByAppendingString:@"&formatter=json"];
+    }
+    
+    [self setURL:[NSURL URLWithString:urlString]];
 }
 
 - (NSString *)mimeType

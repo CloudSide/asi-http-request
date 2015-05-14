@@ -164,7 +164,7 @@ static NSString *bucket = @"test-009";
 // To run this test, uncomment and fill in your S3 access details
 - (void)testREST
 {
-	//[self createTestBucket];
+	[self createTestBucket];
 	
 	BOOL success = (![secretAccessKey isEqualToString:@""] && ![accessKey isEqualToString:@""] && ![bucket isEqualToString:@""]);
 	GHAssertTrue(success, @"You need to supply your S3 access details to run the REST test (see the top of ASIS3RequestTests.m)");

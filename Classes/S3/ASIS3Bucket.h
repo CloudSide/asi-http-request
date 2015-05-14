@@ -11,6 +11,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class ASIS3BucketRequest;
 
 @interface ASIS3Bucket : NSObject {
 	
@@ -28,6 +29,12 @@
 }
 
 + (id)bucketWithOwnerID:(NSString *)ownerID ownerName:(NSString *)ownerName;
+
+- (ASIS3BucketRequest *)requestForAcl;
+
+- (ASIS3BucketRequest *)PUTRequestWithAcl:(NSDictionary *)acl;
+
+- (ASIS3BucketRequest *)requestForMeta;
 
 @property (retain) NSString *name;
 @property (retain) NSDate *creationDate;
